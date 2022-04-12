@@ -3,7 +3,7 @@ pipeline {
 //execution and that each stage directive must specify its own agent section.
     agent none
      stage('Initialize'){
-        def dockerHome = tool 'myDocker'
+        def dockerHome = tool 'docker'
         env.PATH = "${dockerHome}/bin:${env.PATH}"
     }
     stages {

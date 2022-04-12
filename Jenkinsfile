@@ -2,11 +2,12 @@ pipeline {
 //None parameter in the agent section means that no global agent will be allocated for the entire Pipeline’s
 //execution and that each stage directive must specify its own agent section.
     agent none
-     stage('Initialize'){
+     
+    stages {
+        stage('Initialize'){
         def dockerHome = tool 'docker'
         env.PATH = "${dockerHome}/bin:${env.PATH}"
-    }
-    stages {
+            }   
         stage('Build') {
             agent {
                 docker {

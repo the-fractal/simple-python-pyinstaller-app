@@ -4,7 +4,7 @@ pipeline {
     agent none
      
     stages {
-        def myImg
+        
         stage('Build') {
             agent {
                 docker {

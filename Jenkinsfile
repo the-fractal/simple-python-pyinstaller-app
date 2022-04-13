@@ -1,29 +1,34 @@
-// Jenkinsfile
+node {
 
-pipeline {
-  // Assign to docker slave(s) label, could also be 'any'
-  agent {
-    label 'docker' 
-  }
-
-  stages {
-    stage('Docker node test') {
-      agent {
-        docker {
-          // Set both label and image
-          label 'docker'
-          image 'node:7-alpine'
-          args '--name docker-node' // list any args
-        }
-      }
-      steps {
-        // Steps run in node:7-alpine docker container on docker slave
-        sh 'node --version'
-      }
+    stage('Initialize')
+    {
+        def dockerHome = tool 'MyDocker'
+        def mavenHome  = tool 'MyMaven'
+        env.PATH = "${dockerHome}/bin:${mavenHome}/bin:${env.PATH}"
     }
-  }
-}    
 
+    stage('Checkout') 
+    {
+        checkout scm
+    }
+
+      stage('Build') 
+           {
+            sh 'uname -a'
+            sh 'mvn -B -DskipTests clean package'  
+          }
+
+        stage('Test') 
+        {
+            //sh 'mvn test'
+            sh 'ifconfig' 
+        }
+
+        stage('Deliver') 
+          {
+                sh 'bash ./jenkins/deliver.sh'
+        }
+}
 // pipeline {
 // //None parameter in the agent section means that no global agent will be allocated for the entire Pipeline’s
 // //execution and that each stage directive must specify its own agent section.

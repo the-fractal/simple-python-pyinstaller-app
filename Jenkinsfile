@@ -20,7 +20,9 @@ pipeline {
         // Steps run in node:7-alpine docker container on docker slave
         sh 'node --version'
       }
-    }    
+    }
+  }
+}    
 
 // pipeline {
 // //None parameter in the agent section means that no global agent will be allocated for the entire Pipeline’s
